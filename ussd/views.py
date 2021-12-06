@@ -22,6 +22,7 @@ def ussdApp(request):
         service_code = request.POST.get("serviceCode")
         phone_number =request.POST.get("phoneNumber")
         text = request.POST['text']
+        # 1*1*1 
         level = text.split('*')
         category = text[:3]
         response =""
@@ -31,10 +32,12 @@ def ussdApp(request):
             response += "1. Kwandikisha igihingwa \n"
             response += "2. Kumenya ingengabihe \n"
         elif text == '1':
-
+            # SELECT * FROM PRODUCTMODEL where title="" ORDER BY ID DESC LIMIT 5
+            fetchProducts = ProductsModel.objects.all()
             response = "CON Hitamo igihingwa \n"
-            response += "1. Ibinyomoro \n"
-            response += "2. Indimu"
+            for  products in fetchProducts:
+                response += ""+str(products.id)+"."+str(products.title)+ "\n"
+
         elif text == '1*1':
             product="Ibinyomoro"
             response = "CON shyiramo ubuso bw'ubutaka bwawe bw' "+str(product)+"\n"
